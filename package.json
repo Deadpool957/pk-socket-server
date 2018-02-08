@@ -1,0 +1,38 @@
+{
+  "name": "spro-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --inline",
+    "build": "webpack -p",
+    "watch:css": "onchange 'public/site.scss' -- webpack",
+    "watch": "onchange 'app/*/*.js' -- node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "array-unique": "^0.3.2",
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.0",
+    "babel-plugin-transform-es2015-block-scoping": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "body-parser": "^1.17.2",
+    "bt-utils": "^1.1.0",
+    "ejs": "^2.5.6",
+    "express-favicon": "^2.0.0",
+    "express-session": "^1.15.5",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
+    "hotcode": "^0.0.6",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.29.0",
+    "less-loader": "^4.0.4",
+    "log4js": "^2.3.3"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  }
+}
