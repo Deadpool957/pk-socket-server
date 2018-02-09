@@ -31,18 +31,10 @@ wss.on('connection', function connection(ws) {
 //     bt.log('setInterval');
 //     room.job_patrol();
 // },3000)
-
+    
 // function send(json){
 //     wss.clients.forEach(function each(client) {
 //         bt.log(client.openid);
 //         // client.send(JSON.stringify(json));
 //     });
 // }
-
-
-
-(async ()=>{
-    let list = await api.get_question_rand();
-    bt.log(list);
-    bt.log("OK");
-})();  
