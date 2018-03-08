@@ -1,5 +1,6 @@
 var mq = require('./mq');
 var message = require('./message');
+var roomModel = require('./data/roomModel');
 
 var _room = {
 	rooms : [],
@@ -19,8 +20,15 @@ var _room = {
 		}
 		return false;
     },
+    async list(){
+		let list = await roomModel.getAll();
+        return list;
+	},
     // 处理组队建房
     handle(openid){
+        this.list().then( res =>{
+            
+        });
         let rooms = this.rooms.filter(room => ! room.group_status);
         // 检测当前是否有人在匹配
         for(let room of rooms){
