@@ -7,6 +7,10 @@ var outMsg = require('./OUTmessage');
 var _in_message = {
 	handle( res ){
         bt.log('in message');
+        let user = null;
+        if( res.hasOwnProperty('openid') ){
+            user = mq.get(res.openid);
+        }
         if(res.type == _config.message_type.answer){
             outMsg.answer_result(res);
         }else if(res.type == _config.message_type.success){
@@ -14,7 +18,6 @@ var _in_message = {
             room.remove(res.room_id);
         }else if(res.type == _config.message_type.again){
             bt.log('update user status > again');
-            let user = mq.get(res.openid);
             if(user){
                 user.status = 'on';
                 // 继续匹配对战好友
@@ -22,7 +25,6 @@ var _in_message = {
             }
         }else if(res.type == _config.message_type.user_quit){
             bt.log('update user status > quit');
-            let user = mq.get(res.openid);
             if(user){
                 user.status = 'off';
             }
