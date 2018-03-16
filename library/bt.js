@@ -1,4 +1,3 @@
-import setting from 'setting';
 
 let bt = function(){};
 // 消息框
@@ -32,7 +31,7 @@ bt.prototype.toast_hide = function(){
 }
 // 常规日志
 bt.prototype.log = function(val){
-  // console.log(val);
+  console.log(val);
 }
 // 页面重定向
 bt.prototype.go = function(url){
@@ -138,5 +137,5 @@ bt.prototype.arrayInfo = function(data,key,value){
   });
   return info;
 }
-
+global.bt = new bt();
 module.exports = new bt();
