@@ -19,16 +19,30 @@ var _in_message = {
         }else if(res.type == _config.message_type.again){
             bt.log('update user status > again');
             if(user){
-                user.status = 'on';
-                // 继续匹配对战好友
-                room.handle(res.openid);
+                delete user.room_id;
+                // 根据海选或好友对战来更新用户状态或触发匹配对战
+                mq.update(res);
+                if(res.status == 'on'){
+                    room.handle(res.openid);
+                }
             }
         }else if(res.type == _config.message_type.user_quit){
             bt.log('update user status > quit');
             if(user){
+                delete user.room_id;
                 user.status = 'off';
             }
+        }else if(res.type == _config.message_type.firend_create_room){ // 发起好友对战创建房间
+            for(let member of res.members){
+                member.nickName = decodeURIComponent(member.nickName);
+            }
+            res.time = new Date().toLocaleString();
+            room.add(res);
+        }else if(res.type == _config.message_type.firend_pk_start){
+            let m_room = room.get(res.room_id);
+            outMsg.handle(m_room);
         }
+
 	}
 }
 

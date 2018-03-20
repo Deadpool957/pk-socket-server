@@ -11,8 +11,11 @@ function socketVerify(info) {
 			openid : info.req.headers.openid,
 			avatarUrl : info.req.headers.avatarurl,
 			nickName : decodeURIComponent(info.req.headers.nickname),
-			status : 'on'
+			status : info.req.headers.status
 		};
+		if(info.req.headers.hasOwnProperty('roomid')){
+			global.userInfo.room_id = info.req.headers.roomid;
+		}
 	}
     return true;
 }

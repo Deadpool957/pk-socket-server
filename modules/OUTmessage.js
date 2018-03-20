@@ -34,6 +34,15 @@ var _out_message = {
         if(res.firend.openid in mq.wss){
             mq.wss[ res.firend.openid ].send( JSON.stringify(res) );
         }
+    },
+    // 通知可以开始好友PK，通知消息，未并正式开始
+    firend_pk_start_message( res ){
+        res.type = _config.message_type.firend_pk_start_message;
+        for(let user of res.members){
+            if( mq.wss[ user.openid ] ){
+                mq.wss[ user.openid ].send(JSON.stringify(res));
+            }
+        }
     }
 }
 

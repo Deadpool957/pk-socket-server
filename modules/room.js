@@ -20,7 +20,7 @@ var _room = {
 	remove(room_id){
         bt.log('移除房间 ' + room_id);
         let info = this.exist(room_id);
-        bt.log(info);
+        //bt.log(info);
 		if(info.status){
 			this.rooms.splice(info.index,1);
 			return true;
@@ -30,9 +30,26 @@ var _room = {
     get_List(){
 		return this.rooms;
 	},
+    // 返回某个具体房间
+    get( room_id ){
+        return this.rooms.find(info => info.id == room_id);
+    },
     // 处理组队建房
     handle(openid){
-        bt.log('room > handle');
+        bt.log('room > handle > ' + openid);
+        // 如果是通过接受好友对战进入
+        let userInfo = mq.get( openid );
+        if(userInfo.hasOwnProperty('room_id')){
+            let room = this.get(userInfo.room_id);
+            if(room){
+             room.members.push(userInfo);
+            // 立即开战
+            bt.log('开战 ' + userInfo.room_id);
+            message.firend_pk_start_message( room );
+            // message.handle(room);
+           }
+            return;
+        };
         let idle_list = mq.clients.filter( info =>{
             return info.status == 'on';
         })

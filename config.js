@@ -12,7 +12,10 @@ let config = {
         answer : 'ANSWER',// 答题互动
         success : 'SUCCESS',// 完成一轮游戏
         again : 'AGAIN', // 未关闭Socket，继续玩游戏
-        user_quit : 'USER_QUIT' // 用户退出游戏
+        user_quit : 'USER_QUIT', // 用户退出游戏
+        firend_create_room : 'FIRENT_CREATE_ROOM', // 发起好友PK，创建房间
+        firend_pk_start : 'FIREND_PK_START', // 通知好友发起方，可以开战了.
+        firend_pk_start_message : 'FIREND_PK_START_MESSAGE' // 通知好友发起方，可以开战了
     }
 }
 

@@ -8,6 +8,7 @@ var _mq = {
 	},
 	// 添加新用户
 	add(user,ws,fn,close_fn){
+		bt.log('mq.js > add');
 		if(! this.exist(user.openid).status){
 			// 将用户加入队列
 			this.clients.push(user);
@@ -24,8 +25,15 @@ var _mq = {
 			// 创建房间或开始游戏
 			fn();
 			return true;
+		}else{
+			let user = this.get(user.openid);
+			user.status = user.status;
 		}
 		return false;
+	},
+	update(user){
+		let userInfo = this.get(user.openid);
+		userInfo.status = user.status;
 	},
 	// 移除用户
 	remove(openid){
