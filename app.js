@@ -4,6 +4,7 @@ require('./modules/api');
 require('./library/bt');
 require('./library/log4/build');
 require('./library/redis/build');
+require('./library/robot.js');
 var listen = require('./modules/listen');
 var mq = require('./modules/mq');
 var room = require('./modules/room');

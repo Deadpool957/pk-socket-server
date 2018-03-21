@@ -23,7 +23,9 @@ var _out_message = {
                     question : question_list,
                     members : members
                 }
-                mq.wss[ user.openid ].send( JSON.stringify(msg) );
+                if( user.openid.indexOf('TEMPJR') == -1){
+                    mq.wss[ user.openid ].send( JSON.stringify(msg) );
+                }
                 // user.ws.send( JSON.stringify(msg) );
             }
         })();  
@@ -31,7 +33,7 @@ var _out_message = {
     // 答题结果发送给好友
     answer_result( res ){
         // 只有在线用户可以推送
-        if(res.firend.openid in mq.wss){
+        if( res.firend.openid.indexOf('TEMPJR') == -1 && res.firend.openid in mq.wss){
             mq.wss[ res.firend.openid ].send( JSON.stringify(res) );
         }
     },
@@ -39,9 +41,16 @@ var _out_message = {
     firend_pk_start_message( res ){
         res.type = _config.message_type.firend_pk_start_message;
         for(let user of res.members){
-            if( mq.wss[ user.openid ] ){
+            if(  user.openid.indexOf('TEMPJR') == -1 && mq.wss[ user.openid ]){
                 mq.wss[ user.openid ].send(JSON.stringify(res));
             }
+        }
+    },
+    // 用户提前退场，通知到对战好友
+    user_quit( res ){
+        res.type = _config.message_type.firend_pk_user_quit_message;
+        if(res.openid.indexOf('TEMPJR') == -1 && mq.wss_exist(res.openid)){
+            mq.wss[ res.openid ].send(JSON.stringify(res));
         }
     }
 }

@@ -27,6 +27,21 @@ var _room = {
 		}
 		return false;
 	},
+    // 用户提前退场
+    quit( openid ){
+        for(let room of this.rooms){
+            let index = room.members.findIndex( info => { return info.openid == openid });
+            if( index > -1){
+                let he = room.members.filter( info =>{ return info.openid != openid});
+                if( he && he.length > 0 ){
+                    message.user_quit( he[0] );
+                }
+                this.remove(room.id);
+                break;
+                return false;
+            }
+        }
+    },
     get_List(){
 		return this.rooms;
 	},

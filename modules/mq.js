@@ -1,6 +1,9 @@
 var _mq = {
 	clients : [],
 	wss:[],
+	wss_exist(openid){
+		return this.wss.hasOwnProperty(openid);
+	},
 	// 判断某个用户是否存在
 	exist(openid){
 		let index = this.clients.findIndex(info=>{ return info.openid == openid });
@@ -26,14 +29,18 @@ var _mq = {
 			fn();
 			return true;
 		}else{
-			let user = this.get(user.openid);
-			user.status = user.status;
+			if( user && user.hasOwnProperty('openid')){
+				let userInfo = this.get(user.openid);
+				userInfo.status = user.status;
+			}
 		}
 		return false;
 	},
 	update(user){
-		let userInfo = this.get(user.openid);
-		userInfo.status = user.status;
+		if( user && user.hasOwnProperty('openid') && user.hasOwnProperty('status')){
+			let userInfo = this.get(user.openid);
+			userInfo.status = user.status;
+		}
 	},
 	// 移除用户
 	remove(openid){

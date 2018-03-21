@@ -41,6 +41,21 @@ var _in_message = {
         }else if(res.type == _config.message_type.firend_pk_start){
             let m_room = room.get(res.room_id);
             outMsg.handle(m_room);
+        }else if(res.type == _config.message_type.robot_start){
+            // 产生一个随机机器人;
+            let r = robot[ parseInt((robot.length) * Math.random()) ];
+            let m_room = {
+                id : bt.random(5),
+                status : true,
+                time : new Date().toLocaleString(),
+                members : [res,r]
+            };
+            // 更新真实用户在线状态，对战中
+            mq.update(res);
+            // 创建房间
+            room.add(m_room);
+            // 正式开始
+            outMsg.handle(m_room);
         }
 
 	}
