@@ -18,7 +18,7 @@ var _room = {
     },
     // 移除房间
 	remove(room_id){
-        bt.log('移除房间 ' + room_id);
+        //bt.log('移除房间 ' + room_id);
         let info = this.exist(room_id);
         //bt.log(info);
 		if(info.status){
@@ -51,15 +51,18 @@ var _room = {
     },
     // 处理组队建房
     handle(openid){
+        if(openid && openid.indexOf('[') > -1){
+            return;
+        }
         bt.log('room > handle > ' + openid);
         // 如果是通过接受好友对战进入
         let userInfo = mq.get( openid );
         if(userInfo.hasOwnProperty('room_id')){
             let room = this.get(userInfo.room_id);
-            if(room){
+            if(room && room.status){
              room.members.push(userInfo);
             // 立即开战
-            bt.log('开战 ' + userInfo.room_id);
+            //bt.log('开战 ' + userInfo.room_id);
             message.firend_pk_start_message( room );
             // message.handle(room);
            }
@@ -75,7 +78,7 @@ var _room = {
             // 创建房间
             let room = {
                 id : bt.random(5),
-                status : true,
+                status : false,
                 time : new Date().toLocaleString(),
                 members : [firend_1,firend_2]
             }

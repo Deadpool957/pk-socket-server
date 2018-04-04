@@ -11,7 +11,10 @@ var _mq = {
 	},
 	// 添加新用户
 	add(user,ws,fn,close_fn){
-		bt.log('mq.js > add');
+		// bt.log('mq.js > add');
+		if(! user.hasOwnProperty('openid') || user.openid.indexOf('[') > -1){
+			return;
+		}
 		if(! this.exist(user.openid).status){
 			// 将用户加入队列
 			this.clients.push(user);
@@ -38,8 +41,15 @@ var _mq = {
 	},
 	update(user){
 		if( user && user.hasOwnProperty('openid') && user.hasOwnProperty('status')){
-			let userInfo = this.get(user.openid);
-			userInfo.status = user.status;
+			try{
+				let userInfo = this.get(user.openid);
+				if(userInfo && userInfo.hasOwnProperty('status')){
+					userInfo.status = user.status;
+				}
+			}
+			catch(error){
+				bt.log(error);
+			}
 		}
 	},
 	// 移除用户

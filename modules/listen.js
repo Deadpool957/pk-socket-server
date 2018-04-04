@@ -24,7 +24,7 @@ console.log(`WS启动成功，端口号${8100}`);
 let _listen = {
 	// 用户下线后，进行用户数据移除
 	close(code,openid){
-		bt.log('退场 ' + code + " " + openid);
+		//bt.log('退场 ' + code + " " + openid);
 		// 清理房间
 		room.quit(openid);
 		// 清理用户

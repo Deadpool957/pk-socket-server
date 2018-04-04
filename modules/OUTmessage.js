@@ -33,8 +33,10 @@ var _out_message = {
     // 答题结果发送给好友
     answer_result( res ){
         // 只有在线用户可以推送
-        if( res.firend.openid.indexOf('TEMPJR') == -1 && res.firend.openid in mq.wss){
-            mq.wss[ res.firend.openid ].send( JSON.stringify(res) );
+        if(res && res.hasOwnProperty('firend') && res.firend.hasOwnProperty('openid')){
+            if( res.firend.openid.indexOf('TEMPJR') == -1 && res.firend.openid in mq.wss){
+                mq.wss[ res.firend.openid ].send( JSON.stringify(res) );
+            }
         }
     },
     // 通知可以开始好友PK，通知消息，未并正式开始
