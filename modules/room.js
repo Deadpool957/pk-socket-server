@@ -61,6 +61,7 @@ var _room = {
             let room = this.get(userInfo.room_id);
             if(room && room.status){
              room.members.push(userInfo);
+             room.status = false;
             // 立即开战
             //bt.log('开战 ' + userInfo.room_id);
             message.firend_pk_start_message( room );
