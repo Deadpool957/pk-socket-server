@@ -58,10 +58,22 @@ var _in_message = {
         }
         // 用户和机器人发起的对战，更新用户状态，以免和机器人对战过程中，状态未变，其他人介入
         else if(res.type == _config.message_type.robot_start){
-            // bt.log('start');
-            // bt.log(res);
             user = mq.get(res.openid);
             user.status = 'off';
+            // 依赖服务端创建陪伴机器人
+            // let r = robot[ parseInt((robot.length) * Math.random()) ];
+            // let m_room = {
+            //     id : bt.random(5),
+            //     status : true,
+            //     time : new Date().toLocaleString(),
+            //     members : [res,r]
+            // };
+            // // 更新真实用户在线状态，对战中
+            // mq.update(res);
+            // // 创建房间
+            // room.add(m_room);
+            // // 正式开始
+            // outMsg.handle(m_room);
         }
 	}
 }
