@@ -58,6 +58,10 @@ var _room = {
         // 如果是通过接受好友对战进入
         let userInfo = mq.get( openid );
         if(userInfo.hasOwnProperty('room_id')){
+            // 如果是自己加入自己的房间
+            // if(openid == room.members[0].openid){
+            //     return;
+            // }
             let room = this.get(userInfo.room_id);
             if(room && room.status){
              room.members.push(userInfo);

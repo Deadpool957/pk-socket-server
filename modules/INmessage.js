@@ -48,12 +48,15 @@ var _in_message = {
         // 好友接受PK
         else if(res.type == _config.message_type.firend_pk_start_again){
             let room_info = room.get(res.roomid);
-            if(room_info && room_info.status){
-                res.nickName = decodeURIComponent(res.nickName);
-                room_info.members.push(res);
-                outMsg.firend_pk_start_message( room_info );
-                // 修改房间状态，表示已经开战不接受新用户进入。
-                room_info.status = false;
+            // 自己不可以加入自己的对战房间
+            if(res.openid != room_info.members[0].openid){
+                if(room_info && room_info.status){
+                    res.nickName = decodeURIComponent(res.nickName);
+                    room_info.members.push(res);
+                    outMsg.firend_pk_start_message( room_info );
+                    // 修改房间状态，表示已经开战不接受新用户进入。
+                    room_info.status = false;
+                }
             }
         }
         // 用户和机器人发起的对战，更新用户状态，以免和机器人对战过程中，状态未变，其他人介入
@@ -61,7 +64,6 @@ var _in_message = {
             // user = mq.get(res.openid);
             // user.status = 'off';
             // 依赖服务端创建陪伴机器人
-            bt.log('robot_start');
             let r = robot[ parseInt((robot.length) * Math.random()) ];
             let m_room = {
                 id : bt.random(5),
